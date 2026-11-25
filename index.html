@@ -1,0 +1,266 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#14283a"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="DigitalWerk KI"><meta name="mobile-web-app-capable" content="yes"><link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="icon-180.png"><title>DigitalWerk KI – Handwerker Cockpit</title>
+<style>
+:root{--bg:#0c1b28;--p:#152b3e;--p2:#1d3a50;--line:#315069;--gold:#e1b653;--txt:#f4f7fa;--muted:#a7b7c5;--green:#55cf91;--red:#f08080}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--txt);font:15px system-ui}button,input,select,textarea{font:inherit}button{cursor:pointer}.layout{display:grid;grid-template-columns:235px 1fr;min-height:100vh}.side{background:#101f2c;padding:22px 14px;border-right:1px solid var(--line)}.brand{font-size:20px;font-weight:850;padding:8px 10px 25px}.brand i{font-style:normal;color:var(--gold)}nav{display:grid;gap:6px}nav button{border:0;text-align:left;color:var(--muted);background:none;border-radius:10px;padding:12px}nav button.active,nav button:hover{background:var(--p2);color:var(--gold)}main{padding:28px;max-width:1400px;width:100%;margin:auto}.top{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:24px}.eyebrow{color:var(--gold);font-size:11px;letter-spacing:2px;font-weight:bold}.top h1{margin:5px 0;font-size:30px}.muted{color:var(--muted)}.btn{border:1px solid var(--line);background:var(--p2);color:var(--txt);padding:10px 14px;border-radius:10px}.primary{background:var(--gold);color:#182a38;border:0;font-weight:750}.danger{color:#ffaaaa}.actions{display:flex;gap:8px;flex-wrap:wrap}.page{display:none}.page.active{display:block}.grid{display:grid;gap:15px}.stats{grid-template-columns:repeat(4,1fr);margin-bottom:16px}.two{grid-template-columns:1.2fr .8fr}.card{background:linear-gradient(145deg,var(--p),#122638);border:1px solid var(--line);border-radius:16px;padding:18px}.label{font-size:12px;color:var(--muted)}.value{font-size:27px;font-weight:800;margin:8px 0}.green{color:var(--green)}.gold{color:var(--gold)}h2{font-size:18px;margin:0 0 15px}.head{display:flex;justify-content:space-between;align-items:center;margin:5px 0 14px}.form{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.field{display:grid;gap:5px}.field.full{grid-column:1/-1}.field label{font-size:12px;color:var(--muted)}input,select,textarea{width:100%;padding:10px;background:#0d2030;color:var(--txt);border:1px solid var(--line);border-radius:9px}textarea{min-height:75px}table{width:100%;border-collapse:collapse;font-size:13px}th,td{text-align:left;padding:11px 8px;border-bottom:1px solid var(--line)}th{color:var(--muted)}.scroll{overflow:auto}.empty{padding:24px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:10px}.kpi{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--line)}.result{padding:15px;background:#102d2b;border:1px solid #28644f;border-radius:12px;margin-top:14px}.result strong{font-size:25px;color:var(--green)}.modal{display:none;position:fixed;inset:0;background:#000b;align-items:center;justify-content:center;padding:15px}.modal.open{display:flex}.modalbox{background:var(--p);border:1px solid var(--line);border-radius:16px;padding:20px;width:min(600px,100%)}.toast{display:none;position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:var(--gold);color:#14283a;padding:10px 17px;border-radius:25px;font-weight:bold}.pill{background:#344e63;padding:4px 8px;border-radius:20px;font-size:11px}@media(max-width:850px){.layout{grid-template-columns:1fr}.side{padding:12px;border-right:0;border-bottom:1px solid var(--line)}.brand{padding:5px 8px 10px}nav{display:flex;overflow:auto}nav button{white-space:nowrap;padding:9px}main{padding:18px}.stats{grid-template-columns:repeat(2,1fr)}.two{grid-template-columns:1fr}}@media(max-width:520px){.top{align-items:flex-start;flex-direction:column}.top h1{font-size:25px}.form{grid-template-columns:1fr}.field.full{grid-column:auto}.stats{gap:9px}.value{font-size:22px}.card{padding:14px}}
+
+/* iPhone/PWA usability additions */
+@media(max-width:850px){
+  body{padding-bottom:env(safe-area-inset-bottom)}
+  .side{position:sticky;top:0;z-index:20;padding:8px 10px calc(8px + env(safe-area-inset-top));background:#101f2c}
+  .brand{font-size:17px;padding:4px 7px 8px}
+  nav{gap:6px;padding:2px 0 5px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  nav::-webkit-scrollbar{display:none}
+  nav button{flex:0 0 auto;min-height:42px;padding:10px 13px;border:1px solid transparent}
+  nav button.active{border-color:var(--gold)}
+  main{padding:16px 13px calc(28px + env(safe-area-inset-bottom))}
+  .top{gap:12px;margin-bottom:17px}
+  .top .actions{width:100%}
+  .top .actions button{flex:1;min-height:44px}
+  .card{min-width:0}
+  .scroll{max-width:100%;-webkit-overflow-scrolling:touch}
+  input,select,textarea{min-height:44px;font-size:16px}
+  textarea{min-height:100px}
+  button{min-height:42px;touch-action:manipulation}
+}
+@media(max-width:520px){
+  .top{flex-direction:column}
+  .top h1{font-size:24px}
+  .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .stats .card{padding:12px}
+  .value{font-size:21px}
+  .form{gap:10px}
+  .head{align-items:flex-start;gap:10px;flex-wrap:wrap}
+  .head button{width:100%}
+  .actions{gap:7px}
+  .actions .btn{padding:10px 11px}
+  .modal{align-items:flex-end;padding:0}
+  .modalbox{border-radius:18px 18px 0 0;padding:20px 16px calc(20px + env(safe-area-inset-bottom));max-height:88dvh;overflow:auto}
+  .toast{bottom:calc(16px + env(safe-area-inset-bottom));max-width:calc(100vw - 28px);text-align:center}
+}
+</style></head><body><div class="layout"><aside class="side"><div class="brand">◆ DigitalWerk <i>KI</i><div class="muted" style="font-size:10px;letter-spacing:1px">HANDWERKER COCKPIT</div></div><nav>
+<button class="active" data-page="dashboard">▦ Dashboard</button><button data-page="calc">▤ Kalkulation</button><button data-page="projects">▣ Projekte</button><button data-page="customers">♙ Kunden</button><button data-page="materials">▧ Material</button><button data-page="inventory">▣ Lager & Bestand</button><button data-page="offers">▤ Angebote</button><button data-page="settings">⚙ Daten & Einstellungen</button></nav></aside>
+<main><header class="top"><div><div class="eyebrow">DIGITAL. EINFACH. EFFIZIENT.</div><h1 id="title">Dashboard</h1><div class="muted" id="subtitle">Dein Überblick über Aufträge und Angebote.</div></div><div class="actions"><button class="btn" id="backup">↑ Backup</button><button class="btn primary" id="newProject">＋ Neues Projekt</button></div></header>
+<section class="page active" id="p-dashboard"><div class="grid stats"><div class="card"><div class="label">Aktive Projekte</div><div class="value" id="sProjects">0</div><div class="label">Nicht abgeschlossen</div></div><div class="card"><div class="label">Kunden</div><div class="value" id="sCustomers">0</div><div class="label">Im Kundenstamm</div></div><div class="card"><div class="label">Angebotsvolumen</div><div class="value" id="sOffers">0 €</div><div class="label">Brutto gesamt</div></div><div class="card"><div class="label">Kalkulierter Gewinn</div><div class="value green" id="sProfit">0 €</div><div class="label">Vor Steuern und Kosten</div></div></div><div class="grid two"><div class="card"><h2>Letzte Projekte</h2><div id="recent"></div></div><div class="card"><h2>Schnellzugriff</h2><div class="actions"><button class="btn primary" data-go="calc">Neue Kalkulation</button><button class="btn" data-go="customers">Kunden</button><button class="btn" data-go="offers">Angebote</button></div><p class="muted">Deine Daten bleiben lokal in diesem Browser. Sichere sie regelmäßig über Backup.</p></div></div></section>
+<section class="page" id="p-calc"><div class="grid two"><div class="card"><h2>Auftragsdaten</h2><div class="form"><div class="field full"><label>Projekt / Auftrag</label><input id="cName" placeholder="z. B. Badrenovierung Müller"></div><div class="field"><label>Kunde</label><select id="cCustomer"><option value="">Kein Kunde</option></select></div><div class="field"><label>Umsatzsteuer (%)</label><input id="tax" type="number" value="19" min="0"></div><div class="field"><label>Material netto (€)</label><input id="mat" type="number" value="0" min="0" step=".01"></div><div class="field"><label>Arbeitsstunden</label><input id="hours" type="number" value="0" min="0" step=".25"></div><div class="field"><label>Interne Kosten je Stunde (€)</label><input id="rate" type="number" value="35" min="0" step=".01"></div><div class="field"><label>Fahrtkosten netto (€)</label><input id="travel" type="number" value="0" min="0" step=".01"></div><div class="field"><label>Sonstige direkte Kosten (€)</label><input id="other" type="number" value="0" min="0" step=".01"></div><div class="field"><label>Gemeinkosten (%)</label><input id="overhead" type="number" value="15" min="0"></div><div class="field"><label>Zielgewinnmarge (%)</label><input id="margin" type="number" value="20" min="0" max="99"></div><div class="field"><label>Nachlass (%)</label><input id="discount" type="number" value="0" min="0" max="100"></div><div class="field full"><label>Leistungsbeschreibung / Notizen</label><textarea id="notes"></textarea></div></div><div class="head" style="margin-top:18px"><h2>Materialbedarf für diesen Auftrag</h2><button class="btn" id="addNeed">＋ Position hinzufügen</button></div><p class="muted" style="font-size:12px">Diese Positionen werden beim Speichern dem Angebot zugeordnet und bei Annahme im Lager reserviert.</p><div id="calcNeeds" class="empty">Noch keine Materialpositionen erfasst.</div></div></div><div class="card"><h2>Kalkulationsergebnis</h2><div class="kpi"><span class="muted">Arbeitskosten</span><b id="rLabor">0 €</b></div><div class="kpi"><span class="muted">Direkte Kosten</span><b id="rDirect">0 €</b></div><div class="kpi"><span class="muted">Gemeinkosten</span><b id="rOver">0 €</b></div><div class="kpi"><span class="muted">Gesamtkosten</span><b id="rCost">0 €</b></div><div class="kpi"><span class="muted">Netto vor Nachlass</span><b id="rBase">0 €</b></div><div class="kpi"><span class="muted">Nachlass</span><b id="rDiscount">0 €</b></div><div class="result"><div class="label">Angebotspreis brutto</div><strong id="rGross">0 €</strong><div class="label" style="margin-top:8px">Kalkulierter Gewinn: <b id="rProfit" class="green">0 €</b></div></div><button class="btn primary" id="saveOffer" style="margin-top:14px">Kalkulation als Angebot speichern</button><p class="muted" style="font-size:11px">Zielmarge = Gewinn geteilt durch Nettoverkaufspreis. Bitte eigene Vollkosten und Steuersätze prüfen.</p></div></div></section>
+<section class="page" id="p-projects"><div class="head"><h2>Projektübersicht</h2><button class="btn primary" id="addProject">＋ Projekt anlegen</button></div><div class="card" id="projectsList"></div></section>
+<section class="page" id="p-customers"><div class="head"><h2>Kundenstamm</h2><button class="btn primary" id="addCustomer">＋ Kunde anlegen</button></div><div class="card" id="customersList"></div></section>
+<section class="page" id="p-materials"><div class="head"><h2>Materialverwaltung</h2><button class="btn primary" id="addMaterial">＋ Material anlegen</button></div><div class="card" id="materialsList"></div></section>
+
+<section class="page" id="p-inventory">
+ <div class="grid two">
+  <div class="card"><div class="head"><h2>Lagerbestand</h2><button class="btn primary" id="invAddMaterial">＋ Material anlegen</button></div><div id="inventoryList"></div></div>
+  <div class="card"><h2>Bestellvorschläge</h2><p class="muted">Fehlmengen aus angenommenen Angeboten. Ein Wareneingang wird erst nach Bestätigung gebucht.</p><div id="purchaseList"></div></div>
+ </div>
+ <div class="card" style="margin-top:15px"><h2>Lagerbewegungen</h2><div id="movementList"></div></div>
+</section>
+
+<section class="page" id="p-offers"><div class="head"><h2>Gespeicherte Angebote</h2></div><div class="card" id="offersList"></div><div class="card" id="preview" style="display:none;margin-top:15px"></div></section>
+<section class="page" id="p-settings"><div class="grid two"><div class="card"><h2>Datensicherung</h2><p class="muted">Exportiere deine Daten als JSON-Backup und stelle sie später wieder her.</p><button class="btn primary" id="backup2">Backup herunterladen</button> <label class="btn" for="restore">Backup importieren</label><input id="restore" type="file" accept="application/json" hidden></div><div class="card"><h2>Betriebsdaten</h2><div class="form"><div class="field full"><label>Firmenname</label><input id="company"></div><div class="field"><label>E-Mail</label><input id="email"></div><div class="field"><label>Telefon</label><input id="phone"></div><div class="field full"><label>Anschrift</label><textarea id="address"></textarea></div></div><button class="btn primary" id="saveSettings" style="margin-top:12px">Speichern</button></div></div><div class="card" style="margin-top:15px"><h2>Prototyp-Informationen</h2><p class="muted">Version 0.1 · Lokale Browser-Speicherung · Keine Cloud · Keine externe KI-Anbindung. Browserdaten können verloren gehen, wenn Website-Daten gelöscht werden. Regelmäßige Backups sind wichtig.</p><button class="btn danger" id="clear">Alle lokalen Daten löschen</button></div></section>
+</main></div><div class="modal" id="modal"><div class="modalbox"><div class="head"><h2 id="modalTitle">Eintrag</h2><button class="btn" id="close">×</button></div><div id="modalBody"></div></div></div><div class="toast" id="toast"></div>
+<script>
+const K='dwki-cockpit-01',blank=()=>({customers:[],projects:[],materials:[],offers:[],stockMovements:[],purchaseOrders:[],settings:{}});let db;try{db={...blank(),...JSON.parse(localStorage.getItem(K)||'{}')}}catch{db=blank()} db.stockMovements ||= []; db.purchaseOrders ||= []; db.offers ||= []; db.materials ||= [];
+const $=id=>document.getElementById(id),id=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6),n=id=>Math.max(0,Number($(id).value)||0),eur=x=>new Intl.NumberFormat('de-DE',{style:'currency',currency:'EUR'}).format(x||0),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function save(){localStorage.setItem(K,JSON.stringify(db));render()}function msg(s){$('toast').textContent=s;$('toast').style.display='block';setTimeout(()=>$('toast').style.display='none',2200)}
+const labels={dashboard:['Dashboard','Dein Überblick über Aufträge und Angebote.'],calc:['Kalkulation','Berechne deinen Angebotspreis nachvollziehbar.'],projects:['Projekte','Verwalte Aufträge und Bearbeitungsstände.'],customers:['Kunden','Dein Kundenstamm.'],materials:['Material','Häufig verwendete Materialien und Preise.'],offers:['Angebote','Gespeicherte Kalkulationen.'],settings:['Daten & Einstellungen','Betriebsdaten und Datensicherung.'],inventory:['Lager & Bestand','Materialbestand, Reservierungen, Bestellvorschläge und Lagerbewegungen.']};
+function go(p){document.querySelectorAll('.page').forEach(x=>x.classList.toggle('active',x.id==='p-'+p));document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('active',x.dataset.page===p));$('title').textContent=labels[p][0];$('subtitle').textContent=labels[p][1];if(p==='calc')customerOptions()}
+document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>go(b.dataset.page));document.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>go(b.dataset.go));
+function table(head,rows){return rows.length?`<div class="scroll"><table><thead><tr>${head.map(x=>`<th>${x}</th>`).join('')}</tr></thead><tbody>${rows.join('')}</tbody></table></div>`:'<div class="empty">Noch keine Einträge vorhanden.</div>'}
+function customerOptions(){$('cCustomer').innerHTML='<option value="">Kein Kunde</option>'+db.customers.map(c=>`<option value="${c.id}">${esc(c.name)}</option>`).join('')}
+function calculation(){let material=n('mat'),labor=n('hours')*n('rate'),travel=n('travel'),other=n('other'),direct=material+labor+travel+other,over=direct*n('overhead')/100,cost=direct+over,m=Math.min(99,n('margin'))/100,base=cost/(1-m),discount=base*n('discount')/100,net=base-discount,tax=net*n('tax')/100,gross=net+tax,profit=net-cost;[['rLabor',labor],['rDirect',direct],['rOver',over],['rCost',cost],['rBase',base],['rDiscount',discount],['rGross',gross],['rProfit',profit]].forEach(([k,v])=>$(k).textContent=eur(v));return{material,labor,travel,other,direct,over,cost,base,discount,net,tax,gross,profit,taxRate:n('tax'),margin:m}}
+['mat','hours','rate','travel','other','overhead','margin','discount','tax'].forEach(k=>$(k).addEventListener('input',calculation));
+$('saveOffer').onclick=()=>{let r=calculation(),name=$('cName').value.trim();if(!name)return msg('Bitte Auftragsbezeichnung eingeben.');let o={id:id(),number:'DW-'+new Date().getFullYear()+'-'+String(db.offers.length+1).padStart(3,'0'),name,customerId:$('cCustomer').value,notes:$('notes').value,materials:getCalcNeeds(),reservationStatus:'none',materialIssued:false,created:new Date().toISOString(),...r};db.offers.unshift(o);calcNeedLines=[];renderCalcNeeds();if(!db.projects.some(p=>p.name===name))db.projects.unshift({id:id(),name,customerId:o.customerId,status:'Angebot erstellt',created:o.created});save();go('offers');showOffer(o.id);msg('Angebot gespeichert.')};
+function render(){ $('sProjects').textContent=db.projects.filter(p=>p.status!=='Abgeschlossen').length;$('sCustomers').textContent=db.customers.length;$('sOffers').textContent=eur(db.offers.reduce((a,o)=>a+o.gross,0));$('sProfit').textContent=eur(db.offers.reduce((a,o)=>a+o.profit,0));
+$('recent').innerHTML=table(['Projekt','Status'],db.projects.slice(0,6).map(p=>`<tr><td>${esc(p.name)}</td><td><span class="pill">${esc(p.status)}</span></td></tr>`));
+$('projectsList').innerHTML=table(['Projekt','Kunde','Status','Aktion'],db.projects.map(p=>`<tr><td>${esc(p.name)}</td><td>${esc(db.customers.find(c=>c.id===p.customerId)?.name||'–')}</td><td><select data-status="${p.id}">${['Neu','Angebot erstellt','In Arbeit','Abgeschlossen'].map(s=>`<option ${p.status===s?'selected':''}>${s}</option>`).join('')}</select></td><td><button class="btn danger" data-delproject="${p.id}">Löschen</button></td></tr>`));
+$('customersList').innerHTML=table(['Name','E-Mail','Telefon','Aktion'],db.customers.map(c=>`<tr><td><b>${esc(c.name)}</b><br><span class="muted">${esc(c.address)}</span></td><td>${esc(c.email)}</td><td>${esc(c.phone)}</td><td><button class="btn danger" data-delcustomer="${c.id}">Löschen</button></td></tr>`));
+$('materialsList').innerHTML=table(['Material','Einheit','Preis netto','Aktion'],db.materials.map(m=>`<tr><td>${esc(m.name)}</td><td>${esc(m.unit)}</td><td>${eur(m.price)}</td><td><button class="btn" data-use="${m.id}">Übernehmen</button> <button class="btn danger" data-delmat="${m.id}">Löschen</button></td></tr>`));
+$('offersList').innerHTML=table(['Nr. / Auftrag','Datum','Netto','Brutto','Aktion'],db.offers.map(o=>`<tr><td><b>${esc(o.number)}</b><br>${esc(o.name)}</td><td>${new Date(o.created).toLocaleDateString('de-DE')}</td><td>${eur(o.net)}</td><td><b>${eur(o.gross)}</b></td><td><button class="btn" data-view="${o.id}">Ansehen</button> <button class="btn danger" data-deloffer="${o.id}">Löschen</button></td></tr>`));
+document.querySelectorAll('[data-status]').forEach(s=>s.onchange=()=>{db.projects.find(p=>p.id===s.dataset.status).status=s.value;save()});document.querySelectorAll('[data-delproject]').forEach(b=>b.onclick=()=>{if(confirm('Projekt löschen?')){db.projects=db.projects.filter(p=>p.id!==b.dataset.delproject);save()}});document.querySelectorAll('[data-delcustomer]').forEach(b=>b.onclick=()=>{if(confirm('Kunden löschen?')){db.customers=db.customers.filter(c=>c.id!==b.dataset.delcustomer);save()}});document.querySelectorAll('[data-delmat]').forEach(b=>b.onclick=()=>{db.materials=db.materials.filter(m=>m.id!==b.dataset.delmat);save()});document.querySelectorAll('[data-use]').forEach(b=>b.onclick=()=>{$('mat').value=n('mat')+db.materials.find(m=>m.id===b.dataset.use).price;calculation();go('calc')});document.querySelectorAll('[data-view]').forEach(b=>b.onclick=()=>showOffer(b.dataset.view));document.querySelectorAll('[data-deloffer]').forEach(b=>b.onclick=()=>{if(confirm('Angebot löschen?')){db.offers=db.offers.filter(o=>o.id!==b.dataset.deloffer);save();$('preview').style.display='none'}})}
+function showOffer(oid){let o=db.offers.find(x=>x.id===oid),c=db.customers.find(x=>x.id===o.customerId),s=db.settings;$('preview').style.display='block';$('preview').innerHTML=`<div class="head"><h2>Vorschau ${esc(o.number)}</h2><button class="btn primary" id="print">Drucken / PDF speichern</button></div><div id="paper" style="background:white;color:#182a38;padding:25px;border-radius:8px"><h2>${esc(s.company||'Dein Handwerksbetrieb')}</h2><p>${esc(s.address||'Firmenanschrift ergänzen')}<br>${esc(s.email||'')} ${esc(s.phone||'')}</p><hr><p><b>Angebot an:</b><br>${esc(c?.name||'Kunde')}<br>${esc(c?.address||'')}</p><h2>${esc(o.name)}</h2><p>${esc(o.notes||'Vielen Dank für Ihre Anfrage.')}</p><table><tr><th>Position</th><th>Betrag netto</th></tr><tr><td>Material</td><td>${eur(o.material)}</td></tr><tr><td>Arbeitskosten</td><td>${eur(o.labor)}</td></tr><tr><td>Weitere direkte Kosten</td><td>${eur(o.travel+o.other)}</td></tr><tr><td>Gemeinkosten</td><td>${eur(o.over)}</td></tr><tr><td>Nettoangebot</td><td>${eur(o.net)}</td></tr><tr><td>Umsatzsteuer (${o.taxRate} %)</td><td>${eur(o.tax)}</td></tr><tr><td><b>Brutto gesamt</b></td><td><b>${eur(o.gross)}</b></td></tr></table><p style="font-size:11px;margin-top:25px">Vor Versand Leistungsumfang, Mengen, Fristen, Zahlungsbedingungen, Angebotsgültigkeit und gesetzliche Pflichtangaben ergänzen und prüfen. Diese Vorschau ist noch kein rechtssicheres vollständiges Angebot.</p></div>`;$('print').onclick=()=>{let w=open('','_blank');w.document.write('<html><head><title>'+esc(o.number)+'</title><style>body{font:14px Arial;padding:30px;color:#182a38}table{width:100%;border-collapse:collapse}td,th{text-align:left;padding:9px;border-bottom:1px solid #ddd}
+/* iPhone/PWA usability additions */
+@media(max-width:850px){
+  body{padding-bottom:env(safe-area-inset-bottom)}
+  .side{position:sticky;top:0;z-index:20;padding:8px 10px calc(8px + env(safe-area-inset-top));background:#101f2c}
+  .brand{font-size:17px;padding:4px 7px 8px}
+  nav{gap:6px;padding:2px 0 5px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  nav::-webkit-scrollbar{display:none}
+  nav button{flex:0 0 auto;min-height:42px;padding:10px 13px;border:1px solid transparent}
+  nav button.active{border-color:var(--gold)}
+  main{padding:16px 13px calc(28px + env(safe-area-inset-bottom))}
+  .top{gap:12px;margin-bottom:17px}
+  .top .actions{width:100%}
+  .top .actions button{flex:1;min-height:44px}
+  .card{min-width:0}
+  .scroll{max-width:100%;-webkit-overflow-scrolling:touch}
+  input,select,textarea{min-height:44px;font-size:16px}
+  textarea{min-height:100px}
+  button{min-height:42px;touch-action:manipulation}
+}
+@media(max-width:520px){
+  .top{flex-direction:column}
+  .top h1{font-size:24px}
+  .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .stats .card{padding:12px}
+  .value{font-size:21px}
+  .form{gap:10px}
+  .head{align-items:flex-start;gap:10px;flex-wrap:wrap}
+  .head button{width:100%}
+  .actions{gap:7px}
+  .actions .btn{padding:10px 11px}
+  .modal{align-items:flex-end;padding:0}
+  .modalbox{border-radius:18px 18px 0 0;padding:20px 16px calc(20px + env(safe-area-inset-bottom));max-height:88dvh;overflow:auto}
+  .toast{bottom:calc(16px + env(safe-area-inset-bottom));max-width:calc(100vw - 28px);text-align:center}
+}
+</style></head><body>'+ $('paper').innerHTML+'</body></html>');w.document.close();w.print()}}
+function modal(title,fields,action){$('modalTitle').textContent=title;$('modalBody').innerHTML=fields+'<button class="btn primary" id="submit" style="margin-top:14px">Speichern</button>';$('modal').classList.add('open');$('submit').onclick=()=>{if(action()){$('modal').classList.remove('open');save()}}}
+$('close').onclick=()=>$('modal').classList.remove('open');
+$('addCustomer').onclick=()=>modal('Kunde anlegen',`<div class="form"><div class="field full"><label>Name / Firma *</label><input id="fName"></div><div class="field"><label>E-Mail</label><input id="fEmail"></div><div class="field"><label>Telefon</label><input id="fPhone"></div><div class="field full"><label>Anschrift</label><textarea id="fAddress"></textarea></div></div>`,()=>{if(!$('fName').value.trim())return false;db.customers.push({id:id(),name:$('fName').value,email:$('fEmail').value,phone:$('fPhone').value,address:$('fAddress').value});return true});
+function projectModal(){modal('Projekt anlegen',`<div class="form"><div class="field full"><label>Projektname *</label><input id="fProject"></div><div class="field"><label>Kunde</label><select id="fProjectCustomer"><option value="">Kein Kunde</option>${db.customers.map(c=>`<option value="${c.id}">${esc(c.name)}</option>`).join('')}</select></div><div class="field"><label>Status</label><select id="fStatus"><option>Neu</option><option>Angebot erstellt</option><option>In Arbeit</option><option>Abgeschlossen</option></select></div></div>`,()=>{if(!$('fProject').value.trim())return false;db.projects.unshift({id:id(),name:$('fProject').value,customerId:$('fProjectCustomer').value,status:$('fStatus').value,created:new Date().toISOString()});return true})}
+$('addProject').onclick=$('newProject').onclick=projectModal;
+$('addMaterial').onclick=()=>modal('Material anlegen',`<div class="form"><div class="field full"><label>Bezeichnung *</label><input id="fMat"></div><div class="field"><label>Einheit</label><input id="fUnit" placeholder="Stück, m, kg"></div><div class="field"><label>Preis netto (€)</label><input id="fPrice" type="number" min="0" step=".01"></div></div>`,()=>{if(!$('fMat').value.trim())return false;db.materials.push({id:id(),name:$('fMat').value,unit:$('fUnit').value,price:Number($('fPrice').value)||0});return true});
+function backup(){let a=document.createElement('a'),u=URL.createObjectURL(new Blob([JSON.stringify(db,null,2)],{type:'application/json'}));a.href=u;a.download='DigitalWerk-KI-Backup.json';a.click();URL.revokeObjectURL(u);msg('Backup erstellt.')} $('backup').onclick=$('backup2').onclick=backup;
+$('restore').onchange=async e=>{try{let d=JSON.parse(await e.target.files[0].text());if(!Array.isArray(d.customers)||!Array.isArray(d.projects))throw 0;if(confirm('Vorhandene Daten ersetzen?')){db={...blank(),...d};db.stockMovements ||= [];db.purchaseOrders ||= [];save();msg('Backup importiert.')}}catch{alert('Ungültige Backup-Datei.')}};
+$('saveSettings').onclick=()=>{db.settings={company:$('company').value,email:$('email').value,phone:$('phone').value,address:$('address').value};save();msg('Betriebsdaten gespeichert.')};
+$('clear').onclick=()=>{if(confirm('Alle lokalen Daten endgültig löschen?')){db=blank();save();msg('Daten gelöscht.')}};
+function settingsLoad(){for(let [k,v] of Object.entries(db.settings||{})){let map={company:'company',email:'email',phone:'phone',address:'address'};if($(map[k]))$(map[k]).value=v}}
+calculation();render();settingsLoad();
+if('serviceWorker'in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('./sw.js',{scope:'./'}).catch(err=>console.warn('Offline-Modus nicht verfügbar:',err));
+</script>
+<script>
+/* DigitalWerk KI Lager- und Materialmodul v0.2 */
+let calcNeedLines = [];
+const originalGo = go;
+go = function(p){ originalGo(p); if(p==='inventory') renderInventory(); };
+document.querySelectorAll('nav button').forEach(b=>{ if(b.dataset.page==='inventory') b.onclick=()=>go('inventory'); });
+function getCalcNeeds(){ return calcNeedLines.map(x=>({...x})); }
+function renderCalcNeeds(){
+ const el=$('calcNeeds'); if(!el)return;
+ if(!calcNeedLines.length){el.className='empty';el.textContent='Noch keine Materialpositionen erfasst.';return;}
+ el.className='scroll';
+ el.innerHTML='<table><thead><tr><th>Material</th><th>Menge</th><th>Einheit</th><th>Preis netto</th><th>Summe</th><th></th></tr></thead><tbody>'+
+ calcNeedLines.map((x,i)=>`<tr><td>${esc(x.name)}</td><td><input style="width:85px" type="number" min="0.001" step="0.001" value="${x.qty}" data-need-qty="${i}"></td><td>${esc(x.unit)}</td><td>${eur(x.price)}</td><td>${eur(x.qty*x.price)}</td><td><button class="btn danger" data-need-del="${i}">×</button></td></tr>`).join('')+'</tbody></table>';
+ el.querySelectorAll('[data-need-qty]').forEach(inp=>inp.onchange=()=>{let i=+inp.dataset.needQty;calcNeedLines[i].qty=Math.max(0,Number(inp.value)||0);syncMaterialCost();renderCalcNeeds()});
+ el.querySelectorAll('[data-need-del]').forEach(btn=>btn.onclick=()=>{calcNeedLines.splice(+btn.dataset.needDel,1);syncMaterialCost();renderCalcNeeds()});
+}
+function syncMaterialCost(){ if(calcNeedLines.length){$('mat').value=calcNeedLines.reduce((a,x)=>a+x.qty*x.price,0).toFixed(2);calculation();} }
+function addCalcNeed(){
+ if(!db.materials.length){msg('Lege zuerst Material im Lager an.');go('inventory');return;}
+ const options=db.materials.map(m=>`<option value="${m.id}">${esc(m.name)} · ${esc(m.unit||'Stk.')} · ${eur(m.price)}</option>`).join('');
+ modal('Materialbedarf hinzufügen',`<div class="form"><div class="field full"><label>Material</label><select id="needMaterial">${options}</select></div><div class="field"><label>Benötigte Menge</label><input id="needQty" type="number" min="0.001" step="0.001" value="1"></div></div>`,()=>{
+  const m=db.materials.find(x=>x.id===$('needMaterial').value),q=Math.max(0,Number($('needQty').value)||0);if(!m||q<=0){msg('Bitte Material und Menge prüfen.');return false;}
+  calcNeedLines.push({materialId:m.id,name:m.name,qty:q,unit:m.unit||'Stk.',price:Number(m.price)||0});syncMaterialCost();renderCalcNeeds();return true;
+ });
+}
+$('addNeed').onclick=addCalcNeed;
+
+function reservedForMaterial(materialId, exceptOfferId=null){
+ return db.offers.filter(o=>o.id!==exceptOfferId && o.reservationStatus==='reserved' && !o.materialIssued)
+  .reduce((sum,o)=>sum+(o.materials||[]).filter(x=>x.materialId===materialId).reduce((a,x)=>a+(Number(x.qty)||0),0),0);
+}
+function offerNeedsSummary(offer){
+ const totals={};(offer.materials||[]).forEach(x=>{if(x.materialId)totals[x.materialId]=(totals[x.materialId]||0)+(Number(x.qty)||0)});
+ return Object.entries(totals).map(([materialId,qty])=>({materialId,qty,material:db.materials.find(m=>m.id===materialId)}));
+}
+function acceptOffer(offerId){
+ const o=db.offers.find(x=>x.id===offerId);if(!o)return;
+ if(o.reservationStatus==='reserved'||o.status==='Angenommen'){msg('Dieses Angebot wurde bereits angenommen.');return;}
+ if(o.status==='Storniert'){msg('Stornierte Angebote können nicht angenommen werden.');return;}
+ // Idempotency guard: set state before generating purchase proposals.
+ o.status='Angenommen';o.reservationStatus='reserved';o.acceptedAt=new Date().toISOString();
+ const needs=offerNeedsSummary(o);
+ needs.forEach(n=>{
+  if(!n.material)return;
+  const available=Math.max(0,(Number(n.material.stock)||0)-reservedForMaterial(n.materialId,o.id));
+  const shortage=Math.max(0,n.qty-available);
+  if(shortage>0 && !db.purchaseOrders.some(p=>p.offerId===o.id&&p.materialId===n.materialId&&p.status!=='Erhalten')){
+   db.purchaseOrders.unshift({id:id(),offerId:o.id,materialId:n.materialId,materialName:n.material.name,qty:shortage,unit:n.material.unit||'Stk.',supplier:n.material.supplier||'',status:'Vorschlag',created:new Date().toISOString()});
+  }
+ });
+ save();renderInventory();msg('Angebot angenommen; Material wurde reserviert und Fehlmengen geprüft.');
+}
+function issueOfferMaterials(offerId){
+ const o=db.offers.find(x=>x.id===offerId);if(!o||o.materialIssued||o.reservationStatus!=='reserved')return;
+ const needs=offerNeedsSummary(o);
+ const blockers=[];
+ needs.forEach(n=>{
+  if(!n.material){blockers.push('Materialartikel fehlt');return;}
+  const otherReserved=reservedForMaterial(n.materialId,o.id);
+  const available=Math.max(0,(Number(n.material.stock)||0)-otherReserved);
+  if(available+1e-9<n.qty)blockers.push(`${n.material.name}: verfügbar ${available} ${n.material.unit||''}, benötigt ${n.qty}`);
+ });
+ if(blockers.length){alert('Material kann noch nicht vollständig ausgegeben werden:\n\n'+blockers.join('\n')+'\n\nBitte Wareneingang buchen oder Bestand prüfen.');return;}
+ needs.forEach(n=>{
+  const m=n.material;m.stock=(Number(m.stock)||0)-n.qty;
+  db.stockMovements.unshift({id:id(),materialId:m.id,name:m.name,type:'Entnahme',qty:n.qty,unit:m.unit||'Stk.',reference:o.number,created:new Date().toISOString()});
+ });
+ o.materialIssued=true;o.reservationStatus='released';o.issuedAt=new Date().toISOString();
+ save();renderInventory();msg('Material vollständig ausgebucht.');
+}
+function receivePurchase(purchaseId){
+ const p=db.purchaseOrders.find(x=>x.id===purchaseId);if(!p||p.status==='Erhalten')return;
+ const m=db.materials.find(x=>x.id===p.materialId);if(!m){alert('Materialartikel wurde nicht gefunden.');return;}
+ m.stock=(Number(m.stock)||0)+Number(p.qty||0);p.status='Erhalten';p.receivedAt=new Date().toISOString();
+ db.stockMovements.unshift({id:id(),materialId:m.id,name:m.name,type:'Wareneingang',qty:p.qty,unit:m.unit||'Stk.',reference:p.offerId,created:new Date().toISOString()});
+ save();renderInventory();msg('Wareneingang gebucht; Lagerbestand aktualisiert.');
+}
+function renderInventory(){
+ if(!$('inventoryList'))return;
+ $('inventoryList').innerHTML=table(['Material','Bestand','Reserviert','Verfügbar','Mindestbestand','Lieferant','Aktion'],db.materials.map(m=>{
+  const reserved=reservedForMaterial(m.id),stock=Number(m.stock)||0,available=stock-reserved,low=available<=Number(m.minStock||0);
+  return `<tr><td><b>${esc(m.name)}</b><br><span class="muted">${esc(m.sku||'')} · ${esc(m.unit||'Stk.')}</span></td><td>${stock} ${esc(m.unit||'')}</td><td>${reserved}</td><td><b class="${available<0?'danger':''}">${available}</b></td><td>${Number(m.minStock)||0}</td><td>${esc(m.supplier||'–')}</td><td><button class="btn" data-stock-in="${m.id}">＋ Zugang</button> <button class="btn" data-stock-edit="${m.id}">Bearbeiten</button></td></tr>`;
+ }).join(''));
+ $('purchaseList').innerHTML=table(['Material / Auftrag','Menge','Status','Aktion'],db.purchaseOrders.map(p=>`<tr><td><b>${esc(p.materialName)}</b><br><span class="muted">${esc(db.offers.find(o=>o.id===p.offerId)?.number||'')}</span></td><td>${p.qty} ${esc(p.unit)}</td><td><span class="pill">${esc(p.status)}</span></td><td>${p.status==='Erhalten'?'–':`<button class="btn primary" data-receive="${p.id}">Wareneingang</button>`}</td></tr>`).join(''));
+ $('movementList').innerHTML=table(['Datum','Material','Bewegung','Menge','Referenz'],db.stockMovements.slice(0,50).map(m=>`<tr><td>${new Date(m.created).toLocaleString('de-DE')}</td><td>${esc(m.name)}</td><td>${esc(m.type)}</td><td>${m.qty} ${esc(m.unit)}</td><td>${esc(m.reference||'–')}</td></tr>`));
+ document.querySelectorAll('[data-receive]').forEach(b=>b.onclick=()=>receivePurchase(b.dataset.receive));
+ document.querySelectorAll('[data-stock-in]').forEach(b=>b.onclick=()=>stockIn(b.dataset.stockIn));
+ document.querySelectorAll('[data-stock-edit]').forEach(b=>b.onclick=()=>editStockMaterial(b.dataset.stockEdit));
+}
+function stockIn(mid){
+ const m=db.materials.find(x=>x.id===mid);if(!m)return;
+ modal('Lagerzugang buchen',`<p><b>${esc(m.name)}</b></p><div class="field"><label>Zugangsmenge (${esc(m.unit||'Stk.')})</label><input id="stockQty" type="number" min="0.001" step="0.001" value="1"></div>`,()=>{
+  const q=Number($('stockQty').value)||0;if(q<=0)return false;m.stock=(Number(m.stock)||0)+q;
+  db.stockMovements.unshift({id:id(),materialId:m.id,name:m.name,type:'Manueller Zugang',qty:q,unit:m.unit||'Stk.',created:new Date().toISOString()});return true;
+ }); 
+}
+function editStockMaterial(mid){
+ const m=db.materials.find(x=>x.id===mid);if(!m)return;
+ modal('Material bearbeiten',`<div class="form"><div class="field full"><label>Bezeichnung</label><input id="edName" value="${esc(m.name)}"></div><div class="field"><label>Artikelnummer</label><input id="edSku" value="${esc(m.sku||'')}"></div><div class="field"><label>Einheit</label><input id="edUnit" value="${esc(m.unit||'Stk.')}"></div><div class="field"><label>Einkaufspreis netto (€)</label><input id="edPrice" type="number" min="0" step=".01" value="${Number(m.price)||0}"></div><div class="field"><label>Mindestbestand</label><input id="edMin" type="number" min="0" step=".001" value="${Number(m.minStock)||0}"></div><div class="field"><label>Lieferant</label><input id="edSupplier" value="${esc(m.supplier||'')}"></div><div class="field"><label>Lieferzeit (Tage)</label><input id="edLead" type="number" min="0" value="${Number(m.leadTime)||0}"></div></div>`,()=>{
+  m.name=$('edName').value.trim()||m.name;m.sku=$('edSku').value;m.unit=$('edUnit').value||'Stk.';m.price=Number($('edPrice').value)||0;m.minStock=Number($('edMin').value)||0;m.supplier=$('edSupplier').value;m.leadTime=Number($('edLead').value)||0;return true;
+ });
+}
+function addInventoryMaterial(){
+ modal('Neues Lagermaterial',`<div class="form"><div class="field full"><label>Bezeichnung *</label><input id="imName"></div><div class="field"><label>Artikelnummer</label><input id="imSku"></div><div class="field"><label>Einheit</label><input id="imUnit" value="Stk."></div><div class="field"><label>Startbestand</label><input id="imStock" type="number" min="0" value="0"></div><div class="field"><label>Mindestbestand</label><input id="imMin" type="number" min="0" value="0"></div><div class="field"><label>Einkaufspreis netto (€)</label><input id="imPrice" type="number" min="0" step=".01" value="0"></div><div class="field"><label>Lieferant</label><input id="imSupplier"></div><div class="field"><label>Lieferzeit (Tage)</label><input id="imLead" type="number" min="0" value="0"></div></div>`,()=>{
+  const name=$('imName').value.trim();if(!name){msg('Bitte Materialbezeichnung eingeben.');return false;}
+  if(db.materials.some(m=>m.sku&&$('imSku').value&&m.sku.toLowerCase()===$('imSku').value.trim().toLowerCase())){msg('Diese Artikelnummer existiert bereits.');return false;}
+  const m={id:id(),name,sku:$('imSku').value.trim(),unit:$('imUnit').value.trim()||'Stk.',stock:Number($('imStock').value)||0,minStock:Number($('imMin').value)||0,price:Number($('imPrice').value)||0,supplier:$('imSupplier').value.trim(),leadTime:Number($('imLead').value)||0};
+  db.materials.push(m);if(m.stock>0)db.stockMovements.unshift({id:id(),materialId:m.id,name:m.name,type:'Anfangsbestand',qty:m.stock,unit:m.unit,created:new Date().toISOString()});return true;
+ });
+}
+$('invAddMaterial').onclick=addInventoryMaterial;
+$('addMaterial').onclick=addInventoryMaterial;
+
+// Enrich offer list with one-time acceptance and material issue actions.
+const oldRenderOffers = renderOffers;
+renderOffers = function(){
+ oldRenderOffers();
+ document.querySelectorAll('#offersList tbody tr').forEach((tr,i)=>{
+  const o=db.offers[i]; if(!o)return;
+  const cell=tr.lastElementChild;
+  if(o.status==='Angenommen'){
+   const tag=document.createElement('span');tag.className='pill';tag.textContent=o.materialIssued?'Material ausgegeben':'Angenommen / reserviert';cell.appendChild(tag);
+   if(!o.materialIssued){const b=document.createElement('button');b.className='btn';b.textContent='Material entnehmen';b.onclick=()=>issueOfferMaterials(o.id);cell.appendChild(b);}
+  } else if(o.status!=='Storniert'){
+   const b=document.createElement('button');b.className='btn primary';b.textContent='Annehmen & reservieren';b.onclick=()=>acceptOffer(o.id);cell.appendChild(b);
+  }
+ });
+};
+const oldRender = render;
+render = function(){oldRender();renderInventory();};
+
+// Add new materials using inventory-aware form in existing material screen.
+$('addMaterial').onclick=addInventoryMaterial;
+renderCalcNeeds();
+renderOffers();
+renderInventory();
+</script>
+
+</body></html>
