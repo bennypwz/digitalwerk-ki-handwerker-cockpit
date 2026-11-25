@@ -36,6 +36,34 @@
   .modalbox{border-radius:18px 18px 0 0;padding:20px 16px calc(20px + env(safe-area-inset-bottom));max-height:88dvh;overflow:auto}
   .toast{bottom:calc(16px + env(safe-area-inset-bottom));max-width:calc(100vw - 28px);text-align:center}
 }
+
+/* DigitalWerk KI v0.4 – mobile-first navigation and compact layout */
+@media(max-width:850px){
+ .layout{display:block;min-height:100dvh}
+ .side{position:fixed;left:0;right:0;bottom:0;top:auto;z-index:50;padding:7px 8px calc(7px + env(safe-area-inset-bottom));border:0;border-top:1px solid var(--line);background:#101f2c}
+ .brand{display:none}
+ nav{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-template-rows:repeat(2,auto);gap:4px;overflow:visible;padding:0}
+ nav button{white-space:normal;text-align:center;display:flex;align-items:center;justify-content:center;min-width:0;min-height:36px;padding:5px 3px;border-radius:9px;font-size:11px;line-height:1.12;border:1px solid transparent}
+ nav button.active{border-color:var(--gold);background:var(--p2);color:var(--gold)}
+ main{padding:13px 11px calc(135px + env(safe-area-inset-bottom));max-width:none}
+ .top{margin-bottom:11px;gap:8px}.eyebrow{font-size:9px;letter-spacing:1.2px}.top h1{font-size:22px;margin:3px 0}.top .muted{font-size:12px;line-height:1.25}
+ .top .actions{display:grid;grid-template-columns:1fr 1fr;gap:7px;width:100%}.top .actions button{min-height:42px;padding:8px;font-size:13px}
+ .grid{gap:9px}.stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-bottom:9px}.stats .card{padding:10px}.label{font-size:11px;line-height:1.2}.value{font-size:20px;margin:5px 0}
+ .card{padding:12px;border-radius:13px}h2{font-size:16px;margin-bottom:9px}.two{grid-template-columns:1fr}.head{margin:3px 0 9px;gap:8px}.head button{width:auto;min-height:38px}
+ .actions{gap:6px}.actions .btn{font-size:12px;padding:8px 9px;min-height:37px}
+ .form{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.field{min-width:0}.field.full{grid-column:1/-1}.field label{font-size:11px;line-height:1.15}
+ input,select,textarea{min-width:0;padding:8px;min-height:42px;font-size:16px}textarea{min-height:70px}
+ .result{padding:11px;margin-top:9px}.result strong{font-size:21px}.kpi{padding:7px 0;font-size:13px}.empty{padding:15px 9px;font-size:13px}
+ .scroll{overflow:visible}table{display:block;width:100%;font-size:12px}table thead{display:none}table tbody{display:grid;gap:8px}
+ table tbody tr{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;background:#102638;border:1px solid var(--line);border-radius:11px;padding:9px}
+ table td{display:block;min-width:0;padding:4px 2px;border:0;overflow-wrap:anywhere;font-size:12px}
+ table td::before{content:attr(data-label);display:block;color:var(--muted);font-size:10px;line-height:1.15;margin-bottom:3px}
+ table td:last-child{grid-column:1/-1;border-top:1px solid var(--line);padding-top:7px}table td:last-child::before{content:"Aktionen"}
+ table td button{min-height:35px;font-size:11px;padding:7px}
+ .modal{align-items:flex-end;padding:0}.modalbox{width:100%;max-height:85dvh;overflow:auto;border-radius:18px 18px 0 0;padding:15px 13px calc(17px + env(safe-area-inset-bottom))}
+ .toast{bottom:calc(115px + env(safe-area-inset-bottom));max-width:calc(100vw - 24px);text-align:center}
+}
+@media(max-width:390px){main{padding-left:9px;padding-right:9px}.top h1{font-size:20px}nav button{font-size:10px}.stats .card{padding:8px}.value{font-size:18px}}
 </style></head><body><div class="layout"><aside class="side"><div class="brand">◆ DigitalWerk <i>KI</i><div class="muted" style="font-size:10px;letter-spacing:1px">HANDWERKER COCKPIT</div></div><nav>
 <button class="active" data-page="dashboard">▦ Dashboard</button><button data-page="calc">▤ Kalkulation</button><button data-page="projects">▣ Projekte</button><button data-page="customers">♙ Kunden</button><button data-page="materials">▧ Material</button><button data-page="inventory">▣ Lager & Bestand</button><button data-page="offers">▤ Angebote</button><button data-page="settings">⚙ Daten & Einstellungen</button></nav></aside>
 <main><header class="top"><div><div class="eyebrow">DIGITAL. EINFACH. EFFIZIENT.</div><h1 id="title">Dashboard</h1><div class="muted" id="subtitle">Dein Überblick über Aufträge und Angebote.</div></div><div class="actions"><button class="btn" id="backup">↑ Backup</button><button class="btn primary" id="newProject">＋ Neues Projekt</button></div></header>
@@ -54,7 +82,7 @@
 </section>
 
 <section class="page" id="p-offers"><div class="head"><h2>Gespeicherte Angebote</h2></div><div class="card" id="offersList"></div><div class="card" id="preview" style="display:none;margin-top:15px"></div></section>
-<section class="page" id="p-settings"><div class="grid two"><div class="card"><h2>Datensicherung</h2><p class="muted">Exportiere deine Daten als JSON-Backup und stelle sie später wieder her.</p><button class="btn primary" id="backup2">Backup herunterladen</button> <label class="btn" for="restore">Backup importieren</label><input id="restore" type="file" accept="application/json" hidden></div><div class="card"><h2>Betriebsdaten</h2><div class="form"><div class="field full"><label>Firmenname</label><input id="company"></div><div class="field"><label>E-Mail</label><input id="email"></div><div class="field"><label>Telefon</label><input id="phone"></div><div class="field full"><label>Anschrift</label><textarea id="address"></textarea></div></div><button class="btn primary" id="saveSettings" style="margin-top:12px">Speichern</button></div></div><div class="card" style="margin-top:15px"><h2>Prototyp-Informationen</h2><p class="muted">Version 0.3.1 · Lokale Browser-Speicherung · Keine Cloud · Keine externe KI-Anbindung. Browserdaten können verloren gehen, wenn Website-Daten gelöscht werden. Regelmäßige Backups sind wichtig.</p><button class="btn danger" id="clear">Alle lokalen Daten löschen</button></div></section>
+<section class="page" id="p-settings"><div class="grid two"><div class="card"><h2>Datensicherung</h2><p class="muted">Exportiere deine Daten als JSON-Backup und stelle sie später wieder her.</p><button class="btn primary" id="backup2">Backup herunterladen</button> <label class="btn" for="restore">Backup importieren</label><input id="restore" type="file" accept="application/json" hidden></div><div class="card"><h2>Betriebsdaten</h2><div class="form"><div class="field full"><label>Firmenname</label><input id="company"></div><div class="field"><label>E-Mail</label><input id="email"></div><div class="field"><label>Telefon</label><input id="phone"></div><div class="field full"><label>Anschrift</label><textarea id="address"></textarea></div></div><button class="btn primary" id="saveSettings" style="margin-top:12px">Speichern</button></div></div><div class="card" style="margin-top:15px"><h2>Prototyp-Informationen</h2><p class="muted">Version 0.4 · iPhone-Ansicht überarbeitet · Lokale Browser-Speicherung · Keine Cloud · Keine externe KI-Anbindung. Browserdaten können verloren gehen, wenn Website-Daten gelöscht werden. Regelmäßige Backups sind wichtig.</p><button class="btn danger" id="clear">Alle lokalen Daten löschen</button></div></section>
 </main></div><div class="modal" id="modal"><div class="modalbox"><div class="head"><h2 id="modalTitle">Eintrag</h2><button class="btn" id="close">×</button></div><div id="modalBody"></div></div></div><div class="toast" id="toast"></div>
 <script>
 const K='dwki-cockpit-01',blank=()=>({customers:[],projects:[],materials:[],offers:[],stockMovements:[],purchaseOrders:[],settings:{}});let db;try{db={...blank(),...JSON.parse(localStorage.getItem(K)||'{}')}}catch{db=blank()} db.stockMovements ||= []; db.purchaseOrders ||= []; db.offers ||= []; db.materials ||= [];
@@ -75,7 +103,21 @@ $('customersList').innerHTML=table(['Name','E-Mail','Telefon','Aktion'],db.custo
 $('materialsList').innerHTML=table(['Material','Einheit','Preis netto','Aktion'],db.materials.map(m=>`<tr><td>${esc(m.name)}</td><td>${esc(m.unit)}</td><td>${eur(m.price)}</td><td><button class="btn" data-use="${m.id}">Übernehmen</button> <button class="btn danger" data-delmat="${m.id}">Löschen</button></td></tr>`));
 $('offersList').innerHTML=table(['Nr. / Auftrag','Datum','Netto','Brutto','Aktion'],db.offers.map(o=>`<tr><td><b>${esc(o.number)}</b><br>${esc(o.name)}</td><td>${new Date(o.created).toLocaleDateString('de-DE')}</td><td>${eur(o.net)}</td><td><b>${eur(o.gross)}</b></td><td><button class="btn" data-view="${o.id}">Ansehen</button> <button class="btn danger" data-deloffer="${o.id}">Löschen</button></td></tr>`));
 document.querySelectorAll('[data-status]').forEach(s=>s.onchange=()=>{db.projects.find(p=>p.id===s.dataset.status).status=s.value;save()});document.querySelectorAll('[data-delproject]').forEach(b=>b.onclick=()=>{if(confirm('Projekt löschen?')){db.projects=db.projects.filter(p=>p.id!==b.dataset.delproject);save()}});document.querySelectorAll('[data-delcustomer]').forEach(b=>b.onclick=()=>{if(confirm('Kunden löschen?')){db.customers=db.customers.filter(c=>c.id!==b.dataset.delcustomer);save()}});document.querySelectorAll('[data-delmat]').forEach(b=>b.onclick=()=>{db.materials=db.materials.filter(m=>m.id!==b.dataset.delmat);save()});document.querySelectorAll('[data-use]').forEach(b=>b.onclick=()=>{$('mat').value=n('mat')+db.materials.find(m=>m.id===b.dataset.use).price;calculation();go('calc')});document.querySelectorAll('[data-view]').forEach(b=>b.onclick=()=>showOffer(b.dataset.view));document.querySelectorAll('[data-deloffer]').forEach(b=>b.onclick=()=>{if(confirm('Angebot löschen?')){db.offers=db.offers.filter(o=>o.id!==b.dataset.deloffer);save();$('preview').style.display='none'}})}
-function showOffer(oid){let o=db.offers.find(x=>x.id===oid),c=db.customers.find(x=>x.id===o.customerId),s=db.settings;$('preview').style.display='block';$('preview').innerHTML=`<div class="head"><h2>Vorschau ${esc(o.number)}</h2><button class="btn primary" id="print">Drucken / PDF speichern</button></div><div id="paper" style="background:white;color:#182a38;padding:25px;border-radius:8px"><h2>${esc(s.company||'Dein Handwerksbetrieb')}</h2><p>${esc(s.address||'Firmenanschrift ergänzen')}<br>${esc(s.email||'')} ${esc(s.phone||'')}</p><hr><p><b>Angebot an:</b><br>${esc(c?.name||'Kunde')}<br>${esc(c?.address||'')}</p><h2>${esc(o.name)}</h2><p>${esc(o.notes||'Vielen Dank für Ihre Anfrage.')}</p><table><tr><th>Position</th><th>Betrag netto</th></tr><tr><td>Material</td><td>${eur(o.material)}</td></tr><tr><td>Arbeitskosten</td><td>${eur(o.labor)}</td></tr><tr><td>Weitere direkte Kosten</td><td>${eur(o.travel+o.other)}</td></tr><tr><td>Gemeinkosten</td><td>${eur(o.over)}</td></tr><tr><td>Nettoangebot</td><td>${eur(o.net)}</td></tr><tr><td>Umsatzsteuer (${o.taxRate} %)</td><td>${eur(o.tax)}</td></tr><tr><td><b>Brutto gesamt</b></td><td><b>${eur(o.gross)}</b></td></tr></table><p style="font-size:11px;margin-top:25px">Vor Versand Leistungsumfang, Mengen, Fristen, Zahlungsbedingungen, Angebotsgültigkeit und gesetzliche Pflichtangaben ergänzen und prüfen. Diese Vorschau ist noch kein rechtssicheres vollständiges Angebot.</p></div>`;$('print').onclick=()=>{let w=open('','_blank');w.document.write('<html><head><title>'+esc(o.number)+'</title><style>body{font:14px Arial;padding:30px;color:#182a38}table{width:100%;border-collapse:collapse}td,th{text-align:left;padding:9px;border-bottom:1px solid #ddd}</style></head><body>'+ $('paper').innerHTML+'</body></html>');w.document.close();w.print()}}
+function showOffer(oid){let o=db.offers.find(x=>x.id===oid),c=db.customers.find(x=>x.id===o.customerId),s=db.settings;$('preview').style.display='block';$('preview').innerHTML=`<div class="head"><h2>Vorschau ${esc(o.number)}</h2><button class="btn primary" id="print">Drucken / PDF speichern</button></div><div id="paper" style="background:white;color:#182a38;padding:25px;border-radius:8px"><h2>${esc(s.company||'Dein Handwerksbetrieb')}</h2><p>${esc(s.address||'Firmenanschrift ergänzen')}<br>${esc(s.email||'')} ${esc(s.phone||'')}</p><hr><p><b>Angebot an:</b><br>${esc(c?.name||'Kunde')}<br>${esc(c?.address||'')}</p><h2>${esc(o.name)}</h2><p>${esc(o.notes||'Vielen Dank für Ihre Anfrage.')}</p><table><tr><th>Position</th><th>Betrag netto</th></tr><tr><td>Material</td><td>${eur(o.material)}</td></tr><tr><td>Arbeitskosten</td><td>${eur(o.labor)}</td></tr><tr><td>Weitere direkte Kosten</td><td>${eur(o.travel+o.other)}</td></tr><tr><td>Gemeinkosten</td><td>${eur(o.over)}</td></tr><tr><td>Nettoangebot</td><td>${eur(o.net)}</td></tr><tr><td>Umsatzsteuer (${o.taxRate} %)</td><td>${eur(o.tax)}</td></tr><tr><td><b>Brutto gesamt</b></td><td><b>${eur(o.gross)}</b></td></tr></table><p style="font-size:11px;margin-top:25px">Vor Versand Leistungsumfang, Mengen, Fristen, Zahlungsbedingungen, Angebotsgültigkeit und gesetzliche Pflichtangaben ergänzen und prüfen. Diese Vorschau ist noch kein rechtssicheres vollständiges Angebot.</p></div>`;$('print').onclick=()=>{let w=open('','_blank');w.document.write('<html><head><title>'+esc(o.number)+'</title><style>body{font:14px Arial;padding:30px;color:#182a38}table{width:100%;border-collapse:collapse}td,th{text-align:left;padding:9px;border-bottom:1px solid #ddd}</style></head><body>'+ $('paper').innerHTML+'<script>
+(function(){
+ function labelTables(){
+  document.querySelectorAll('table').forEach(function(t){
+   var labels=Array.from(t.querySelectorAll('thead th')).map(function(th){return th.textContent.trim()});
+   t.querySelectorAll('tbody tr').forEach(function(tr){
+    Array.from(tr.children).forEach(function(td,i){if(td.tagName==='TD')td.setAttribute('data-label',labels[i]||'')});
+   });
+  });
+ }
+ labelTables();
+ new MutationObserver(labelTables).observe(document.body,{childList:true,subtree:true});
+})();
+</script>
+</body></html>');w.document.close();w.print()}}
 function modal(title,fields,action){$('modalTitle').textContent=title;$('modalBody').innerHTML=fields+'<button class="btn primary" id="submit" style="margin-top:14px">Speichern</button>';$('modal').classList.add('open');$('submit').onclick=()=>{if(action()){$('modal').classList.remove('open');save()}}}
 $('close').onclick=()=>$('modal').classList.remove('open');
 $('addCustomer').onclick=()=>modal('Kunde anlegen',`<div class="form"><div class="field full"><label>Name / Firma *</label><input id="fName"></div><div class="field"><label>E-Mail</label><input id="fEmail"></div><div class="field"><label>Telefon</label><input id="fPhone"></div><div class="field full"><label>Anschrift</label><textarea id="fAddress"></textarea></div></div>`,()=>{if(!$('fName').value.trim())return false;db.customers.push({id:id(),name:$('fName').value,email:$('fEmail').value,phone:$('fPhone').value,address:$('fAddress').value});return true});
@@ -226,4 +268,18 @@ renderInventory();
 renderOfferActions();
 </script>
 
+<script>
+(function(){
+ function labelTables(){
+  document.querySelectorAll('table').forEach(function(t){
+   var labels=Array.from(t.querySelectorAll('thead th')).map(function(th){return th.textContent.trim()});
+   t.querySelectorAll('tbody tr').forEach(function(tr){
+    Array.from(tr.children).forEach(function(td,i){if(td.tagName==='TD')td.setAttribute('data-label',labels[i]||'')});
+   });
+  });
+ }
+ labelTables();
+ new MutationObserver(labelTables).observe(document.body,{childList:true,subtree:true});
+})();
+</script>
 </body></html>
