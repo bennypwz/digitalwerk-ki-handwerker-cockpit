@@ -54,7 +54,7 @@
 </section>
 
 <section class="page" id="p-offers"><div class="head"><h2>Gespeicherte Angebote</h2></div><div class="card" id="offersList"></div><div class="card" id="preview" style="display:none;margin-top:15px"></div></section>
-<section class="page" id="p-settings"><div class="grid two"><div class="card"><h2>Datensicherung</h2><p class="muted">Exportiere deine Daten als JSON-Backup und stelle sie später wieder her.</p><button class="btn primary" id="backup2">Backup herunterladen</button> <label class="btn" for="restore">Backup importieren</label><input id="restore" type="file" accept="application/json" hidden></div><div class="card"><h2>Betriebsdaten</h2><div class="form"><div class="field full"><label>Firmenname</label><input id="company"></div><div class="field"><label>E-Mail</label><input id="email"></div><div class="field"><label>Telefon</label><input id="phone"></div><div class="field full"><label>Anschrift</label><textarea id="address"></textarea></div></div><button class="btn primary" id="saveSettings" style="margin-top:12px">Speichern</button></div></div><div class="card" style="margin-top:15px"><h2>Prototyp-Informationen</h2><p class="muted">Version 0.3 · Lokale Browser-Speicherung · Keine Cloud · Keine externe KI-Anbindung. Browserdaten können verloren gehen, wenn Website-Daten gelöscht werden. Regelmäßige Backups sind wichtig.</p><button class="btn danger" id="clear">Alle lokalen Daten löschen</button></div></section>
+<section class="page" id="p-settings"><div class="grid two"><div class="card"><h2>Datensicherung</h2><p class="muted">Exportiere deine Daten als JSON-Backup und stelle sie später wieder her.</p><button class="btn primary" id="backup2">Backup herunterladen</button> <label class="btn" for="restore">Backup importieren</label><input id="restore" type="file" accept="application/json" hidden></div><div class="card"><h2>Betriebsdaten</h2><div class="form"><div class="field full"><label>Firmenname</label><input id="company"></div><div class="field"><label>E-Mail</label><input id="email"></div><div class="field"><label>Telefon</label><input id="phone"></div><div class="field full"><label>Anschrift</label><textarea id="address"></textarea></div></div><button class="btn primary" id="saveSettings" style="margin-top:12px">Speichern</button></div></div><div class="card" style="margin-top:15px"><h2>Prototyp-Informationen</h2><p class="muted">Version 0.3.1 · Lokale Browser-Speicherung · Keine Cloud · Keine externe KI-Anbindung. Browserdaten können verloren gehen, wenn Website-Daten gelöscht werden. Regelmäßige Backups sind wichtig.</p><button class="btn danger" id="clear">Alle lokalen Daten löschen</button></div></section>
 </main></div><div class="modal" id="modal"><div class="modalbox"><div class="head"><h2 id="modalTitle">Eintrag</h2><button class="btn" id="close">×</button></div><div id="modalBody"></div></div></div><div class="toast" id="toast"></div>
 <script>
 const K='dwki-cockpit-01',blank=()=>({customers:[],projects:[],materials:[],offers:[],stockMovements:[],purchaseOrders:[],settings:{}});let db;try{db={...blank(),...JSON.parse(localStorage.getItem(K)||'{}')}}catch{db=blank()} db.stockMovements ||= []; db.purchaseOrders ||= []; db.offers ||= []; db.materials ||= [];
@@ -203,13 +203,11 @@ function addInventoryMaterial(){
 $('invAddMaterial').onclick=addInventoryMaterial;
 $('addMaterial').onclick=addInventoryMaterial;
 
-// Enrich offer list with one-time acceptance and material issue actions.
-const oldRenderOffers = renderOffers;
-renderOffers = function(){
- oldRenderOffers();
+// Ergänzt die Angebotsliste um Materialreservierung und Ausgabe.
+function renderOfferActions(){
  document.querySelectorAll('#offersList tbody tr').forEach((tr,i)=>{
   const o=db.offers[i]; if(!o)return;
-  const cell=tr.lastElementChild;
+  const cell=tr.lastElementChild; if(!cell)return;
   if(o.status==='Angenommen'){
    const tag=document.createElement('span');tag.className='pill';tag.textContent=o.materialIssued?'Material ausgegeben':'Angenommen / reserviert';cell.appendChild(tag);
    if(!o.materialIssued){const b=document.createElement('button');b.className='btn';b.textContent='Material entnehmen';b.onclick=()=>issueOfferMaterials(o.id);cell.appendChild(b);}
@@ -217,15 +215,15 @@ renderOffers = function(){
    const b=document.createElement('button');b.className='btn primary';b.textContent='Annehmen & reservieren';b.onclick=()=>acceptOffer(o.id);cell.appendChild(b);
   }
  });
-};
+}
 const oldRender = render;
-render = function(){oldRender();renderInventory();};
+render = function(){oldRender();renderInventory();renderOfferActions();};
 
 // Add new materials using inventory-aware form in existing material screen.
 $('addMaterial').onclick=addInventoryMaterial;
 renderCalcNeeds();
-renderOffers();
 renderInventory();
+renderOfferActions();
 </script>
 
 </body></html>

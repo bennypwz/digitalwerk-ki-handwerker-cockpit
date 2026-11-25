@@ -1,4 +1,4 @@
-# DigitalWerk KI – iPhone-Version v0.3
+# DigitalWerk KI – iPhone-Version v0.3.1
 
 Diese Version baut auf dem hochgeladenen v0.2-Prototyp auf und ergänzt die mobile Bedienung sowie PWA-Metadaten.
 
